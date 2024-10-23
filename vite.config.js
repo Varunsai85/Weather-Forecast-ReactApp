@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base:'/Weather-Forecast-ReactAPP/dist',
   build:{
-    outDir:'dist',
+    outDir:'build',
   }
 })
