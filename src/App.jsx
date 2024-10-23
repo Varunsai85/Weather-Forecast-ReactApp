@@ -65,12 +65,11 @@ function App() {
     setTime(result.currentTime)
     setDate(result.currentDate)
     setDays(data)
-    console.log(data);
   }
   
 
   const getWeather = async () => {
-    const forecastWeahterURL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`
+    const forecastWeahterURL = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`
     try {
       const forecastResponse = await fetch(forecastWeahterURL);
       const forecastData = await forecastResponse.json();
