@@ -64,4 +64,11 @@ body{
   .text-6xl{
     font-size: 3rem;
   }
+  .navbar{
+    padding-left:10px;
+    padding-right: 10px;
+  }
+  .tempchange{
+    scale: 1.2;
+  }
 }
