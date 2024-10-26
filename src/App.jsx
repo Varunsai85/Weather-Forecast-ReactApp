@@ -9,17 +9,20 @@ import { MdAccessTimeFilled } from "react-icons/md";
 import { FiSunrise } from "react-icons/fi";
 import { FiSunset } from "react-icons/fi";
 import { Chart as ChartJS, defaults } from 'chart.js/auto';
-import { Line ,Bar} from 'react-chartjs-2';
+import TodayForecastC from './components/TodayForecastC';
 import './App.css'
+import BarchartC from './components/BarchartC';
+import TodayForecastF from './components/TodayForecastF';
+import BarChartF from './components/BarChartF';
 
-defaults.maintainAspectRatio=false;
-defaults.responsive=true;
-defaults.plugins.title.display=true;
-defaults.plugins.title.align="center";
-defaults.plugins.title.font.size=20;
-defaults.plugins.title.color="Black";
-defaults.plugins.width='100%'
-defaults.plugins.height='100%'
+defaults.maintainAspectRatio = false;
+defaults.responsive = true;
+defaults.plugins.title.display = true;
+defaults.plugins.title.align = "center";
+defaults.plugins.title.font.size = 20;
+defaults.plugins.title.color = "Black";
+defaults.plugins.width = '100%'
+defaults.plugins.height = '100%'
 
 
 function App() {
@@ -39,11 +42,11 @@ function App() {
   const [sunrise, setSunrise] = useState("")
   const [days, setDays] = useState([])
   const API_KEY = import.meta.env.VITE_API_KEY;
-  
+
   useEffect(() => {
     getWeather()
   }, [city])
-  
+
   const currentTime = () => {
     const now = new Date();
     const currentTime = now.toLocaleTimeString().slice(0, 5)
@@ -66,7 +69,7 @@ function App() {
     setDate(result.currentDate)
     setDays(data)
   }
-  
+
 
   const getWeather = async () => {
     const forecastWeahterURL = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`
@@ -101,7 +104,7 @@ function App() {
 
   return (
     <>
-      <Navbar handleClickC={handleClickC} handleClickF={handleClickF} handleChange={handleChange} city={resCity} handleGet={handleGet} />
+      <Navbar handleClickC={handleClickC} handleClickF={handleClickF} handleChange={handleChange} city={resCity} handleGet={handleGet} isActive={deg} />
       <main className='select-none px-1'>
         <div className='flex my-5 justify-between'>
           <div className="country-temp w-[30%] flex flex-col items-center bg-violet-300 rounded-lg p-3 shadow-box justify-center min-h-40">
@@ -110,85 +113,7 @@ function App() {
           </div>
           <div className="relative w-[69%] bg-violet-300 rounded-lg p-3 shadow-box">
             <div className='min-h-64'>
-              <Line
-                data={{
-                  labels: currentDay.map((data) => data.time.slice(11)),
-                  datasets: [
-                    {
-                      label: 'Temperature °C',
-                      data: currentDay.map((data) => data.temp_c),
-                      backgroundColor: "rgb(134 113 231)",
-                      borderColor: "rgb(221 214 254)",
-                    }
-                  ]
-                }}
-                options={{
-                  
-                  elements: {
-                    line: {
-                      tension: 0.5,
-                    }
-                  },
-                  plugins: {
-                    title: {
-                      text: "Today Forecast",
-                      font:{
-                        family:'Rubik',
-                        size:18,
-                        weight:'500'
-                      }
-                    },
-                    legend: {
-                      labels:{
-                        color:'black',
-                        font:{
-                          family:'Rubik',
-              
-                        }
-                      }
-                    },
-                  },
-                  scales: {
-                    y: {
-                      grid: {
-                        display: false
-                      },
-                      border: {
-                        display:false,
-                        color: "rgb(221 214 254)",
-                        width:4
-                      },
-                      ticks:{
-                        color:"black",
-                        font:{
-                          family:'Rubik',
-                          size:'10',
-                          weight:'normal'
-                        }
-                      }
-                    },
-                    x: {
-                      grid: {
-                        display: false
-                      },
-                      border: {
-                        display:false,
-                        color: "rgb(221 214 254)",
-                        width:4
-                      },
-                      ticks:{
-                        color:"black",
-                        font:{
-                          family:'Rubik',
-                          size:9.1,
-                          weight:'normal'
-                        }
-                      }
-                    }
-                  }
-                }
-                }
-              />
+              {deg === "C" ? <TodayForecastC currentDay={currentDay} /> : <TodayForecastF currentDay={currentDay} />}
             </div>
           </div>
         </div>
@@ -266,126 +191,10 @@ function App() {
           </div>
         </div>
         <div className="relative w-full bg-violet-300 rounded-lg p-3 shadow-box my-3">
-            <div className='min-h-96'>
-              <Bar
-                data={{
-                  labels: days.map((data) => data.date),
-                  datasets: [
-                    {
-                      label: `Temperature °${deg}`,
-                      data: days.map((data) => data.day.avgtemp_c),
-                      backgroundColor: "rgb(134 113 231)",
-                      yAxisID:'y-temp',
-                      display:true,
-                      borderRadius:10,
-                    },
-                    {
-                      label:'Humidity',
-                      data:days.map(data=>data.day.avghumidity),
-                      backgroundColor: "rgb(221 214 254)",
-                      borderRadius:10,
-                      yAxisID:"y-humid"
-                    }
-                  ]
-                }}
-                options={{
-                  
-                  elements: {
-                    line: {
-                      tension: 0.5,
-                    }
-                  },
-                  plugins: {
-                    title: {
-                      text: "Temperature and humidity change - 7 day forecast",
-                      font:{
-                        family:'Rubik',
-                          size:18,
-                          weight:'normal'
-                      }
-                    },
-                    legend: {
-                      display: true,
-                      labels:{
-                        color:'black',
-                        font:{
-                          family:'Rubik',
-                          size:11,
-                          weight:'normal'
-                        }
-                      }
-                    },
-                  },
-                  scales: {
-                    'y-temp': {
-                      grid: {
-                        display: false
-                      },
-                      border: {
-                        display:false,
-                        color: "rgb(221 214 254)",
-                        width:4
-                      },
-                      position:'left',
-                      title:{
-                        display:true,
-                        text:`Temperature °${deg}`,
-                        color:'black',
-                        font:{
-                          family:'Rubik',
-                          size:14,
-                          weight:'normal'
-                        }
-                      },
-                      ticks:{
-                        color:"rgb(0 0 0)",
-                      }
-                    },
-                    'y-humid':{
-                      grid: {
-                        display: false
-                      },
-                      border: {
-                        display:false,
-                        color: "rgb(221 214 254)",
-                        width:4
-                      },
-                      position:'right',
-                      title:{
-                        display:true,
-                        text:"Humidity",
-                        color:'black',
-                        font:{
-                          family:'Rubik',
-                          size:14,
-                          weight:'normal'
-                        }
-                      },
-                      ticks:{
-                        color:"rgb(0 0 0)",
-                        font:{
-                          family:'Rubik',
-                        }
-                      }
-                    },
-                    x: {
-                      grid: {
-                        display: false
-                      },
-                      border: {
-                        display:false,
-                        color: "rgb(221 214 254)",
-                        width:4
-                      },
-                      ticks:{
-                        color:'black',
-                      }
-                    }
-                  }
-                }}
-              />
-            </div>
+          <div className='min-h-96'>
+            {deg === "C" ? <BarchartC days={days} /> : <BarChartF days={days} />}
           </div>
+        </div>
       </main>
     </>
   )

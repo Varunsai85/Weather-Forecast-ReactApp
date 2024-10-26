@@ -2,7 +2,7 @@ import React from 'react'
 import { TbTemperatureCelsius } from "react-icons/tb";
 import { TbTemperatureFahrenheit } from "react-icons/tb";
 
-const Navbar = ({handleClickC,handleClickF,handleChange,city,handleGet}) => {
+const Navbar = ({handleClickC,handleClickF,handleChange,city,handleGet,isActive}) => {
     return (
         <nav className='flex w-full justify-between py-3 items-center sticky top-0 z-10 bg-[#d5d4fd]'>
             <div className='font-medium'>Weather App</div>
@@ -11,10 +11,10 @@ const Navbar = ({handleClickC,handleClickF,handleChange,city,handleGet}) => {
                 <button onClick={handleGet} className='bg-violet-500 rounded-lg p-1 text-white px-2'>Get Weather</button>
             </div>
             <div className='flex rounded-full bg-violet-100 p-[2px] gap-1'>
-                <div onClick={handleClickC} className="rounded-full cursor-pointer temp-button">
+                <div onClick={handleClickC} className={`rounded-full cursor-pointer ${isActive==='C' ? "temp-button":""}`}>
                     <div className="p-1"><TbTemperatureCelsius /></div>
                 </div>
-                <div onClick={handleClickF} className="rounded-full cursor-pointer temp-button">
+                <div onClick={handleClickF} className={`rounded-full cursor-pointer ${isActive==='F' ? "temp-button":""}`}>
                     <div className="p-1"><TbTemperatureFahrenheit /></div>
                 </div>
             </div>
