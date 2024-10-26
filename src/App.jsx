@@ -119,7 +119,7 @@ function App() {
         </div>
         <div className='w-full bg-violet-300 rounded-lg p-3 shadow-box my-5'>
           <div className='mb-3'>WEATHER DETAILS</div>
-          <div className='grid grid-cols-4 gap-4'>
+          <div className='weater grid grid-cols-4 gap-4'>
             <div className='bg-violet-200 rounded-lg flex items-center justify-between p-2 shadow-box'>
               <div className='flex justify-center flex-col'>
                 <div className='text-xs'>SUNRISE</div>
@@ -180,12 +180,12 @@ function App() {
         </div>
         <div className='w-full bg-violet-300 rounded-lg p-3 shadow-box my-5'>
           <div className='mb-3'>7 DAYS WEATHER FORECAST</div>
-          <div className='justify-between grid grid-cols-7 gap-3 min-h-44'>
+          <div className='justify-between grid grid-cols-7 gap-3 min-h-44 sevendayforecast overflow-x-auto min-w-44'>
             {days.map((item, index) => {
               return <div key={item.date} className='bg-violet-200 rounded-lg flex flex-col p-2 shadow-box items-center gap-3 w-full justify-between min-h-44'>
                 <div className='text-xs'>DAY {index + 1}</div>
                 <div className='text-2xl'>{item.day.condition.text}</div>
-                <div className='text-xs'>{item.date}</div>
+                <div className='text-xs itemdate'>{item.date}</div>
               </div>
             })}
           </div>
