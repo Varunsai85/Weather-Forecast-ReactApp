@@ -71,7 +71,7 @@ body{
   .tempchange{
     scale: 1.2;
   }
-  .input-placeholder{
+  .input-placeholder::placeholder{
     font-size: small;
   }
 }
