@@ -23,7 +23,6 @@ defaults.plugins.height='100%'
 
 
 function App() {
-  const API_KEY = "8bc124a934dd4475a84134551242010";
   const [city, setCity] = useState("New Delhi")
   const [currentDay, setCurrentDay] = useState([])
   const [condition, setCondition] = useState('')
@@ -39,7 +38,8 @@ function App() {
   const [sunset, setSunset] = useState("")
   const [sunrise, setSunrise] = useState("")
   const [days, setDays] = useState([])
-
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  
   useEffect(() => {
     getWeather()
   }, [city])
